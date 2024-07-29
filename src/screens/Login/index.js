@@ -15,7 +15,7 @@ const Login = ({ login }) => {
   };
     
       return (
-        <Container style={{ textAlign: 'center', marginTop: '50px' }}>
+        <Container>
           <Logo>TripGoing</Logo>
           <GoogleLogo>
             <img src={googleLogo} alt="Google Logo" className="google-logo-image" />

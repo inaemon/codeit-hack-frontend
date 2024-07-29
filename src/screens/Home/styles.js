@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+    position: fixed;
+    top: 60px;
+    left: 0;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
     font-family: Arial, sans-serif;
+    overflow-y: scroll;
+    width: calc(100% - 40px);
+    height: calc(100% - 180px);
 `;
 
 export const AddButton = styled.button`
