@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import Navbar from '../../component/NavBar'; // 네비게이션 바 컴포넌트 임포트
-import Header from '../../component/Header';
-import './styles.css';
+import axios from 'axios';
+import './styles.js';
+import { Container, LoginButton, Logo, GoogleLogo } from './styles.js';
+import googleLogo from './components/google-logo.png'; 
 
 const Login = ({ login }) => {
     const handleLogin = async () => {
         try {
           // 구글 로그인 API 호출
-          const response = await axios.get('/api/auth/google'); // 실제 API 엔드포인트로 변경
+          const response = await axios.get('/localhost:5000/auth/google'); // 실제 API 엔드포인트로 변경
           console.log(response.data);
           // 로그인 성공 후 처리
         } catch (error) {
@@ -16,10 +17,15 @@ const Login = ({ login }) => {
       };
     
       return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-          <GoogleLogoCircle />
-          <GoogleLoginButton onClick={handleLogin} />
-        </div>
+        <Container style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Logo>TripGoing</Logo>
+          <GoogleLogo>
+            <img src={googleLogo} alt="Google Logo" className="google-logo-image" />
+          </GoogleLogo>
+          <LoginButton onClick={handleLogin}>
+            구글로 로그인하기
+          </LoginButton>
+        </Container>
       );
 };
 

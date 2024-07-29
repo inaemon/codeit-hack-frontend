@@ -1,6 +1,8 @@
 import React from 'react';
 import Itinerary from './components/Itinerary';
-import './App.css';
+import Navbar from '../../component/NavBar';
+import Header from '../../component/Header';
+import './styles.css';
 
 function App() {
   const itineraryData = [
@@ -31,9 +33,11 @@ function App() {
 
   return (
     <div className="App">
+      <Header/>
       {itineraryData.map((data, index) => (
         <Itinerary key={index} date={data.date} items={data.items} />
       ))}
+      <Navbar/>
     </div>
   );
 }
