@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Navbar from '../../component/NavBar'; // 네비게이션 바 컴포넌트 임포트
 import Header from '../../component/Header';
@@ -127,7 +126,9 @@ function App() {
                             onChange={(e) => setComment(e.target.value)}
                             required 
                         />
-                        <button type="submit">제출</button>
+                        <div className='button_div'>
+                            <button type="submit">등록</button>
+                        </div>
                     </form>
                     <h3>이 장소의 리뷰</h3>
                     <ul>

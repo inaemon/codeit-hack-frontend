@@ -3,9 +3,10 @@ import styled from "styled-components";
 import { useState } from "react";
 
 const StarSection = styled.div`
+    margin: 10px 10px 10px 0;
     .star {
         color: yellow;
-        font-size: 45px;
+        font-size: 30px;
         cursor: pointer;
     }
 `;
