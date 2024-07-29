@@ -105,6 +105,7 @@ function App() {
                 <div className="search-section">
                     <form onSubmit={handleSearch}>
                         <input 
+                            className='searchInput'
                             type="text" 
                             placeholder="장소 검색"
                             value={searchQuery}
@@ -120,7 +121,7 @@ function App() {
                         <label>평점:</label>
                         <StarRating starScore={starScore} setStarScore={setStarScore} />
                         <label htmlFor="comment">리뷰:</label>
-                        <textarea 
+                        <input
                             id="comment"
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}

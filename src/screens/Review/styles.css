@@ -13,6 +13,29 @@ body {
   height: calc(100% - 180px);
 }
 
+.search-section {
+  padding-top: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+form {
+  margin: 20px 0;
+}
+
+input {
+  margin: 10px 0;
+  width: calc(100% - 20px);
+  padding: 8px;
+  border-radius: 10px;
+  border: solid 1px black;
+}
+
+.searchInput{
+  width: calc(100% - 90px);
+  margin-right: 10px;
+}
+
 .review-section {
   /*padding: 20px;*/
   padding-top: 20px;
@@ -24,27 +47,27 @@ h2, h3 {
   margin: 10px 0;
 }
 
-form {
-  margin: 20px 0;
-}
-
+/*
 input[type="number"], textarea {
   margin: 10px 0;
   width: calc(100% - 20px);
   padding: 8px;
+  border-radius: 10px;
 }
+*/
 
 button {
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color: #6c63ff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
+  width: 60px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #6c63ff;
 }
 
 @media (max-width: 600px) {
