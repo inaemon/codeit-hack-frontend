@@ -4,6 +4,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Navbar from '../../component/NavBar'; // 네비게이션 바 컴포넌트 임포트
 import Header from '../../component/Header';
 import StarRating from './StarRating';
+import './styles.css';
 
 const mapContainerStyle = {
     height: '400px',
@@ -88,9 +89,9 @@ function App() {
     };
 
     return (
-        <div>
-            <Navbar />
-            <div>
+        <>
+            <Header/>
+            <div className='container'>  
                 <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}>
                     <GoogleMap
                         mapContainerStyle={mapContainerStyle}
@@ -141,7 +142,8 @@ function App() {
                     </ul>
                 </div>
             </div>
-            </div>
+            <Navbar />
+        </>
     );
 }
 

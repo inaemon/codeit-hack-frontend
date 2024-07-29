@@ -51,8 +51,10 @@ const Home = () => {
     };
 
     return (
+        <>
+        <Header />
         <Container>
-            <Header />
+            
             <AddButton onClick={() => setIsModalOpen(true)}>+  여행 일정 만들기</AddButton>
             {isModalOpen && (
                 <ModalWrapper>
@@ -95,8 +97,10 @@ const Home = () => {
                     </TravelItem>
                 ))}
             </TravelList>
-            <Navbar/>
+            
         </Container>
+        <Navbar/>
+        </>
     );
 };
 

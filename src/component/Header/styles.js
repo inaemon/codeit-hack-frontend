@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
 export const Container = styled.header`
+    position: fixed;
+    top: 0;
+    left: 0;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: calc(100% - 40px);
     height: 40px;
-    padding-bottom: 20px;
+    padding: 20px;
     font-family: Arial, sans-serif;
 `;
 
