@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Navbar from '../../component/NavBar'; // 네비게이션 바 컴포넌트 임포트
 import Header from '../../component/Header';
-import './styles.css';
 import StarRating from './StarRating';
 
 const mapContainerStyle = {
@@ -15,13 +15,12 @@ const center = {
     lng: 126.978,
 };
 
-const Review = () => {
+function App() {
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [starScore, setStarScore] = useState(0);
     const [comment, setComment] = useState('');
-    
-    // 사용자 정보 상태 추가
+    const [searchQuery, setSearchQuery] = useState(''); // 검색 쿼리 상태 추가
     const [user, setUser] = useState({
         nickname: '사용자 닉네임',
         profilePic: 'URL_TO_PROFILE_PIC'
@@ -39,11 +38,12 @@ const Review = () => {
     };
 
     const getPlaceInfo = async (lat, lng) => {
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyA1yuea2RvD3T6IHW4hENgTR69KmgfKZu0`);
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`);
         const data = await response.json();
         if (data.results.length > 0) {
             const placeName = data.results[0].formatted_address;
-            return { lat, lng, name: placeName };
+            const placeId = data.results[0].place_id; // 구글 장소 ID 추가
+            return { lat, lng, name: placeName, placeId }; // 장소 ID 포함
         }
         return null;
     };
@@ -67,10 +67,31 @@ const Review = () => {
         }
     };
 
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(searchQuery)}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`);
+        const data = await response.json();
+        if (data.results.length > 0) {
+            const placeInfo = {
+                lat: data.results[0].geometry.location.lat,
+                lng: data.results[0].geometry.location.lng,
+                name: data.results[0].formatted_address,
+                placeId: data.results[0].place_id
+            };
+            setSelectedPlace(placeInfo);
+            // 지도 중심을 검색된 장소로 설정
+            center.lat = placeInfo.lat;
+            center.lng = placeInfo.lng;
+        } else {
+            alert("장소를 찾을 수 없습니다.");
+        }
+    };
+
     return (
-        <div className='container'>  
-                <Header/>
-                <LoadScript googleMapsApiKey="AIzaSyA1yuea2RvD3T6IHW4hENgTR69KmgfKZu0">
+        <div>
+            <Navbar />
+            <div>
+                <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}>
                     <GoogleMap
                         mapContainerStyle={mapContainerStyle}
                         center={center}
@@ -80,6 +101,18 @@ const Review = () => {
                         {selectedPlace && <Marker position={selectedPlace} />}
                     </GoogleMap>
                 </LoadScript>
+                <div className="search-section">
+                    <form onSubmit={handleSearch}>
+                        <input 
+                            type="text" 
+                            placeholder="장소 검색"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            required
+                        />
+                        <button type="submit">검색</button>
+                    </form>
+                </div>
                 <div className="review-section">
                     <h2>리뷰 남기기</h2>
                     <form onSubmit={handleSubmit}>
@@ -107,12 +140,12 @@ const Review = () => {
                         ))}
                     </ul>
                 </div>
-                <Navbar /> {/* 네비게이션 바 추가 */}
-        </div>
+            </div>
+            </div>
     );
 }
 
-export default Review;
+export default App;
 
 
 
