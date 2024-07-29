@@ -5,16 +5,14 @@ import { Container, LoginButton, Logo, GoogleLogo } from './styles.js';
 import googleLogo from './components/google-logo.png'; 
 
 const Login = ({ login }) => {
-    const handleLogin = async () => {
-        try {
-          // 구글 로그인 API 호출
-          const response = await axios.get('/localhost:5000/auth/google'); // 실제 API 엔드포인트로 변경
-          console.log(response.data);
-          // 로그인 성공 후 처리
-        } catch (error) {
-          console.error('로그인 오류:', error);
-        }
-      };
+  const handleLogin = async () => {
+    try {
+        // Google 로그인 페이지로 리디렉션
+        window.location.href = 'http://localhost:5000/auth/google';
+    } catch (error) {
+        console.error('로그인 오류:', error);
+    }
+  };
     
       return (
         <Container style={{ textAlign: 'center', marginTop: '50px' }}>

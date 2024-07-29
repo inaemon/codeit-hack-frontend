@@ -1,23 +1,53 @@
 import React, { useState } from 'react';
-import { AddButton, Container, ModalWrapper, ModalContent, CloseButton, SubmitButton, TripList, TripItem } from './styles';
+import { AddButton, Container, ModalWrapper, ModalContent, CloseButton, SubmitButton, TravelList, TravelItem } from './styles';
 import Navbar from '../../component/NavBar';
 import Header from '../../component/Header';
+import axios from 'axios';
 
 const Home = () => {
-    const [trips, setTrips] = useState([]);
+    const [travels, settravels] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [newTrip, setNewTrip] = useState({ title: '', startDate: '', endDate: '' });
+    const [newTravel, setNewTravel] = useState({ title: '', startDate: '', endDate: '' });
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setNewTrip({ ...newTrip, [name]: value });
+        setNewTravel({ ...newTravel, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setTrips([...trips, newTrip]);
-        setNewTrip({ title: '', startDate: '', endDate: '' });
+        settravels([...travels, newTravel]);
+        setNewTravel({ title: '', startDate: '', endDate: '' });
         setIsModalOpen(false);
+        
+        const travelData = {
+			title : '',
+			start_date: '',
+			end_date: '',
+		};
+
+		console.log(travelData);
+
+		try {
+			//setIsLoading(true);
+			const response = await axios.post('http://localhost:5000/travels', travelData, {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (response.status !== 201) {
+				throw new Error('Failed');
+			}
+
+			const result = response.data;
+
+			console.log(result);
+		} catch (error) {
+			console.error(error);
+		} finally {
+			//setIsLoading(false);
+		}
     };
 
     return (
@@ -31,7 +61,7 @@ const Home = () => {
                         <input
                             type="text"
                             name="title"
-                            value={newTrip.title}
+                            value={newTravel.title}
                             onChange={handleInputChange}
                             required
                             placeholder='여행 제목'
@@ -40,14 +70,14 @@ const Home = () => {
                         <input
                             type="date"
                             name="startDate"
-                            value={newTrip.startDate}
+                            value={newTravel.startDate}
                             onChange={handleInputChange}
                             required
                         />
                         <input
                             type="date"
                             name="endDate"
-                            value={newTrip.endDate}
+                            value={newTravel.endDate}
                             onChange={handleInputChange}
                             required
                         />
@@ -56,15 +86,15 @@ const Home = () => {
                 </ModalWrapper>
             )}
 
-            <TripList>
+            <TravelList>
                 <h2>내 여행</h2>
-                {trips.map((trip, index) => (
-                    <TripItem key={index}>
-                        <h3 className='title'>{trip.title}</h3>
-                        <span className='date'>{trip.startDate} - {trip.endDate}</span>
-                    </TripItem>
+                {travels.map((travel, index) => (
+                    <TravelItem key={index}>
+                        <h3 className='title'>{travel.title}</h3>
+                        <span className='date'>{travel.startDate} - {travel.endDate}</span>
+                    </TravelItem>
                 ))}
-            </TripList>
+            </TravelList>
             <Navbar/>
         </Container>
     );
