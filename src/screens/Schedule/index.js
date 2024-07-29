@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 //import { useLocation } from 'react-router-dom'; 
 import Itinerary from './components/Itinerary';
-import './App.css';
+import './styles.css';
 
 const App = () => {
     //const location = useLocation(); // location 객체를 사용
