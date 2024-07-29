@@ -39,7 +39,7 @@ const Review = () => {
     };
 
     const getPlaceInfo = async (lat, lng) => {
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyA1yuea2RvD3T6IHW4hENgTR69KmgfKZu0`);
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`);
         const data = await response.json();
         if (data.results.length > 0) {
             const placeName = data.results[0].formatted_address;
@@ -70,7 +70,7 @@ const Review = () => {
     return (
         <div className='container'>  
                 <Header/>
-                <LoadScript googleMapsApiKey="AIzaSyA1yuea2RvD3T6IHW4hENgTR69KmgfKZu0">
+                <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}>
                     <GoogleMap
                         mapContainerStyle={mapContainerStyle}
                         center={center}
