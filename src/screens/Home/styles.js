@@ -26,13 +26,13 @@ export const AddButton = styled.button`
     }
 `;
 
-export const TripList = styled.div`
+export const TravelList = styled.div`
     margin-top: 20px;
     width: 100%;
     max-width: 500px;
 `;
 
-export const TripItem = styled.div`
+export const TravelItem = styled.div`
     height: 80px;
     padding: 10px;
     margin-bottom: 10px;
