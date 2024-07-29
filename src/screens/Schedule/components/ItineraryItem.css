@@ -21,7 +21,7 @@
 .item-type {
   margin-left: 10px;
   font-size: 0.9em;
-  color: #666;
+  color: #ffffff;
   background-color: #7d7ff6;
   padding: 2px 6px;
   border-radius: 4px;
@@ -64,5 +64,23 @@
 }
 
 .item-button:hover {
+  background-color: #0056b3;
+}
+
+.item-button2{
+  position: fixed;
+    top: 30px; 
+    right: 30px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.item-button2{
   background-color: #0056b3;
 }

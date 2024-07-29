@@ -18,6 +18,9 @@ const ItineraryItem = ({ item }) => {
       <div className="item-footer">
         <span className="item-type">{item.type}</span> 
         <span className="item-price">{item.price}</span>
+        <button className="item-button2" onClick={handleButtonClick}>
+        추가
+      </button>
         {item.time && <span className="item-time">{item.time}</span>}
       </div>
       {item.memo && <div className="item-memo">{item.memo}</div>}
