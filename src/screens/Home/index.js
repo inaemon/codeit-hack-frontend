@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { AddButton, Container, ModalWrapper, ModalContent, CloseButton, SubmitButton, TravelList, TravelItem } from './styles';
 import Navbar from '../../component/NavBar';
 import Header from '../../component/Header';
-import axios from 'axios';
 
 const Home = () => {
-    const [travels, settravels] = useState([]);
+    const [travels, setTravels] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newTravel, setNewTravel] = useState({ title: '', startDate: '', endDate: '' });
+
+    useEffect(() => {
+        const fetchTravels = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/travels', {
+                    withCredentials: true,
+                });
+                setTravels(response.data);
+            } catch (error) {
+                console.error('Failed to fetch travels:', error);
+            }
+        };
+        fetchTravels();
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -16,38 +30,31 @@ const Home = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        settravels([...travels, newTravel]);
-        setNewTravel({ title: '', startDate: '', endDate: '' });
-        setIsModalOpen(false);
         
         const travelData = {
-			title : '',
-			start_date: '',
-			end_date: '',
-		};
+            title: newTravel.title,
+            start_date: newTravel.startDate,
+            end_date: newTravel.endDate,
+        };
 
-		console.log(travelData);
+        try {
+            const response = await axios.post('http://localhost:3000/travels', travelData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                withCredentials: true,
+            });
 
-		try {
-			//setIsLoading(true);
-			const response = await axios.post('http://localhost:5000/travels', travelData, {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
+            if (response.status !== 201 && response.status !== 200) {
+                throw new Error('Failed to create travel');
+            }
 
-			if (response.status !== 201) {
-				throw new Error('Failed');
-			}
-
-			const result = response.data;
-
-			console.log(result);
-		} catch (error) {
-			console.error(error);
-		} finally {
-			//setIsLoading(false);
-		}
+            setTravels([...travels, response.data]);
+            setNewTravel({ title: '', startDate: '', endDate: '' });
+            setIsModalOpen(false);
+        } catch (error) {
+            console.error('Failed to create travel:', error);
+        }
     };
 
     return (
@@ -64,7 +71,7 @@ const Home = () => {
                             value={newTravel.title}
                             onChange={handleInputChange}
                             required
-                            placeholder='여행 제목'
+                            placeholder="여행 제목"
                         />
                         <label>날짜</label>
                         <input
@@ -90,12 +97,12 @@ const Home = () => {
                 <h2>내 여행</h2>
                 {travels.map((travel, index) => (
                     <TravelItem key={index}>
-                        <h3 className='title'>{travel.title}</h3>
-                        <span className='date'>{travel.startDate} - {travel.endDate}</span>
+                        <h3 className="title">{travel.title}</h3>
+                        <span className="date">{travel.start_date} - {travel.end_date}</span>
                     </TravelItem>
                 ))}
             </TravelList>
-            <Navbar/>
+            <Navbar />
         </Container>
     );
 };

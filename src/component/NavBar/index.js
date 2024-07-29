@@ -14,7 +14,7 @@ const Navbar = ({ isAuthenticated, logout }) => {
                 {isAuthenticated ? (
                     <li><button onClick={logout}>로그 아웃</button></li>
                 ) : (
-                    <li><Link to="/login">로그아웃</Link></li>
+                    <li><Link to="http://localhost:5000/logout">로그아웃</Link></li>
                 )}
             </ul>
         </nav>
